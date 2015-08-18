@@ -3,14 +3,14 @@
 if [ "$TERM" != "dumb" ]; then
     
     # netboot fucker
-    touch /homes/nkoester/.bashrc.techfak
+    touch $HOME/nkoester/.bashrc.techfak
     # source private bash settings...
-    source /homes/nkoester/.bashrc.techfak
+    source $HOME/nkoester/.bashrc.techfak
     
     # netboot fucker
-    touch /homes/nkoester/.bashrc.priv
+    touch $HOME/.bashrc.priv
     # source private bash settings...
-    source /homes/nkoester/.bashrc.priv
+    source $HOME/.bashrc.priv
 fi
 
 
