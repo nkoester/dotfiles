@@ -3,9 +3,9 @@
 if [ "$TERM" != "dumb" ]; then
     
     # netboot fucker
-    touch $HOME/nkoester/.bashrc.techfak
+    touch $HOME/.bashrc.techfak
     # source private bash settings...
-    source $HOME/nkoester/.bashrc.techfak
+    source $HOME/.bashrc.techfak
     
     # netboot fucker
     touch $HOME/.bashrc.priv
