@@ -1,0 +1,83 @@
+[options]
+# fonts
+# font = Monospace 9
+# font = Terminus 9
+font = Droid Sans Mono 8
+
+# misc
+scrollback_lines = 100000
+scroll_on_output = true
+scroll_on_keystroke = true
+audible_bell = false
+visible_bell = true
+urgent_on_bell = true
+mouse_autohide = false
+dynamic_title = true
+clickable_url = true
+browser = firefox
+search_wrap = true
+icon_name = terminal
+#geometry = 960x1154
+geometry = 135x90
+roundness = 2.0
+allow_bold = true
+size_hints = true
+
+# "system", "on" or "off"
+cursor_blink = off
+
+# "block", "underline" or "ibeam"
+cursor_shape = ibeam
+
+# $BROWSER is used by default if set, with xdg-open as a fallback
+#browser = xdg-open
+
+# set size hints for the window
+#size_hints = false
+
+# emit escape sequences for other keys modified by Control
+#modify_other_keys = false
+
+[colors]
+cursor = #dd0c0c
+highlight = #626262
+
+
+# special
+foreground      = #ffffff
+foreground_bold = #ffffff
+#cursor          = #ffffff
+background      = #272822
+
+# black
+color0  = #272822
+color8  = #75715e
+
+# red
+color1  = #801d3b
+color9  = #801d3b
+
+# green
+color2  = #58801d
+color10 = #58801d
+
+# yellow
+color3  = #f4bf75
+color11 = #f4bf75
+
+# blue
+color4  = #488e99
+color12 = #488e99
+
+# magenta
+color5  = #ae81ff
+color13 = #ae81ff
+
+# cyan
+color6  = #a1efe4
+color14 = #a1efe4
+
+# white
+color7  = #f8f8f2
+color15 = #f9f8f5
+
