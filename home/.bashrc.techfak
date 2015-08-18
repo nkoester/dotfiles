@@ -1,0 +1,105 @@
+# nkoester .bashrc
+
+# ask for confirmation...
+function confirm(){
+    if ! [[ "$CONFIRM_OVERRIDE" = "YES" ]]; then
+        read -n1 -p "Do that? [y,n] " doit 
+        case $doit in  
+          y|Y) printf "\n\n" ; return 0 ;; 
+          n|N) printf "\nUser abort ...\n"; return 1 ;; 
+          *) printf "\nUser abort ...\n"; return 1 ;; 
+        esac
+    fi
+}
+
+provide_modulefile_helper_functions() {
+
+    function add_modulefile_path() {
+        printf "Adding path '$1' to module list ..."
+        if [ -d $1 ]; then
+            if [ ! `module use 2>&1 | grep $1` ]; then 
+                module use $1
+            fi
+            printf "done!\n"
+        else
+            printf "ERROR: path does not exist!\n"
+        fi
+    }
+
+    function ltm() {
+        add_modulefile_path ~/.modulefiles
+        printf "Loading ltm_local module ..."
+        module load ltm_local
+        printf "done!\n"
+    }
+
+    function isy() {
+        add_modulefile_path /vol/isy/share/modulefiles
+        printf "Loading available isy module ..."
+        module load isyenv
+        printf "done!\n"
+    }
+
+    function csra() {
+        add_modulefile_path /vol/csra/share/modulefiles
+        printf "Loading csra module ..."
+        module load csra-lsp-csra-nightly
+        printf "done!\n"
+    }
+
+}
+
+# load the module file form corlab fileserver
+function cor() {
+    printf "Loading cor module system ..."
+
+    type module > /dev/null 2> /dev/null
+    moduleavail=$?
+    if [ $moduleavail -ne 0 -a -f /vol/cor/local/.global/opt/modules/init/bash ]; then
+        . /vol/cor/local/.global/opt/modules/init/bash
+        module load cor
+        provide_modulefile_helper_functions
+        printf "done!\n"
+        #overwrite if we really need the ai moudle ...
+        function ai() {
+            printf "Loading ai module ..."
+            confirm || return 1
+            if [ -d /vol/ai/share/modulefiles ]; then
+                module use /vol/ai/share/modulefiles
+                printf "done!\n"
+            else 
+                printf "err - can't find /vol/ai/share/modulefiles!\n"
+                return 1
+            fi
+        }
+    else
+        printf "already done!\n"
+    fi
+    return 0
+}
+
+function ai() {
+    printf "WARNING! Using module installation from /vol/ai/lib/modules-tcl/init/bash...\n"
+    printf "Loading ai module system ..."
+    confirm || return 1
+
+    # load the module function
+    type module > /dev/null 2> /dev/null
+    moduleavail=$?
+    if [ $moduleavail -ne 0 -a -f /vol/ai/lib/modules-tcl/init/bash ]; then
+        . /vol/ai/lib/modules-tcl/init/bash
+
+        # load the module files
+        if [ -d /vol/ai/share/modulefiles ]; then
+            module use /vol/ai/share/modulefiles
+            provide_modulefile_helper_functions
+            printf "done!\n"
+        else 
+            printf "err - can't find /vol/ai/share/modulefiles!\n"
+            return 1
+        fi
+    else 
+        printf "err - can't find /vol/ai/lib/modules-tcl/init/bash\n"
+    fi
+    return 0
+}

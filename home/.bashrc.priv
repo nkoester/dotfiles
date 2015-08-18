@@ -1,0 +1,390 @@
+#################################################################
+#
+#         .bashrc.priv file
+#
+#         private user configuration for bash
+#
+#################################################################
+
+MANPATH=/usr/share/man:$MANPATH
+PATH=/homes/nkoester/.local/bin:/homes/nkoester/bin:$PATH
+# a fix for the additional slash at the end which lead to weird errors 
+export HOME="/homes/nkoester"
+
+# source our own bash completions
+source ~/.bash_completion.d/*
+
+
+#==================================================
+## set colors to 256
+#==================================================
+if [[ $TERM == xterm-termite ]]; then
+  # . /etc/profile.d/vte.sh
+  # __vte_prompt_command
+  : 
+else
+  # assuming gnome-terminal here ...
+  export TERM="xterm-256color"
+  echo -ne '\e]12;white\a'
+fi
+
+
+
+#=================================================
+## redefine prompt
+#==================================================
+#unset PROMPT_COMMAND
+
+# Regular Colors
+Black='\e[0;30m'        # Black
+Red='\e[0;31m'          # Red
+Green='\e[0;32m'        # Green
+Yellow='\e[0;33m'       # Yellow
+Blue='\e[0;34m'         # Blue
+Purple='\e[0;35m'       # Purple
+Cyan='\e[0;36m'         # Cyan
+White='\e[0;37m'        # White
+
+COLOR_BRACKETS='\[\e[0;37m\]'
+COLOR_DESC='\[\e[0;32m\]'
+function set_default_ps1() {
+    export PS1_row1="\n\
+${COLOR_BRACKETS}[\[\e[1;32m\]\u${COLOR_DESC} @ \[\e[1;31m\]\h${COLOR_BRACKETS}] \
+${COLOR_BRACKETS}[${COLOR_DESC}\[\e[1;31m\]`cat ~/.bash_history_eternal| sed '/^\s*#/d;/^\s*$/d' | wc -l`${COLOR_BRACKETS}/\[\e[1;31m\]\j${COLOR_BRACKETS}] \
+${COLOR_BRACKETS}[${COLOR_DESC}\t - \D{%d.%m.%y}${COLOR_BRACKETS}] \
+"
+
+    export PS1_row2="\n\
+[${COLOR_DESC}\`pwd -P\`/${COLOR_BRACKETS}] \[\e[0;37m\]"
+
+    export PS1="${PS1_row1}${PS1_row2}"
+}
+
+set_default_ps1
+
+
+#==================================================
+## le History
+#==================================================
+
+export HISTFILESIZE=
+export HISTSIZE=
+export HISTFILE=~/.bash_history_eternal
+export HISTCONTROL=ignoreboth:erasedups
+export HISTTIMEFORMAT='%F %T '
+export HISTIGNORE='la:ll:..:ls:bg:fg:history:stat:which:csra:htop:make:pwd:hh:[bf]g:clear:git log:git push:git pull:git status:git diff:ai:csra-env:tree'
+#PROMPT_COMMAND='history -a ; history -n ; $PROMPT_COMMAND'
+PROMPT_COMMAND='history -a ; $PROMPT_COMMAND'
+shopt -s histappend
+shopt -s cmdhist
+shopt -s checkwinsize
+shopt -s checkjobs
+shopt -s dotglob
+shopt -s extglob
+shopt -s globstar
+shopt -s hostcomplete
+
+# hh control...
+export HH_CONFIG=rawhistory,keywords,hicolor,warning,debug
+if [[ $- =~ .*i.* ]]; then bind '"\C-r": "\C-a hh \C-j"'; fi
+
+alias stat='cut -f1 -d" " ~/.bash_history | sort | uniq -c | sort -nr | head -n 30'
+source /etc/bash_completion
+
+#==================================================
+## Alias
+#==================================================
+
+# copy paste on console using xclip
+# old
+#alias c="xclip -i -selection clipboard"
+c() {
+    local _scs_col="\e[0;32m"; local _wrn_col='\e[1;31m'; local _trn_col='\e[0;33m'
+    # Check that xclip is installed.
+    if ! type xclip > /dev/null 2>&1; then
+        echo -e "$_wrn_col""You must have the 'xclip' program installed.\e[0m"
+    # Check user is not root (root doesn't have access to user xorg server)
+    elif [[ "$USER" == "root" ]]; then
+        echo -e "$_wrn_col""Must be regular user (not root) to copy a file to the clipboard.\e[0m"
+    else
+        # If no tty, data should be available on stdin
+        if ! [[ "$( tty )" == /dev/* ]]; then
+            input="$(< /dev/stdin)"
+        # Else, fetch input from params
+        else
+            input="$*"
+        fi
+        if [ -z "$input" ]; then    # If no input, print usage message.
+            echo "Copies a string to the clipboard."
+            echo "Usage: cb <string>"
+            echo "       echo <string> | cb"
+        else
+            # Copy input to clipboard
+            echo -n "$input" | xclip -selection c
+            # Truncate text for status
+            if [ ${#input} -gt 80 ]; then input="`printf "$input" | wc -w` words/`printf \"$input\" | wc -l` lines: `echo $input | cut -c1-80`$_trn_col...\e[0m"; fi
+            # Print status.
+            echo -e "$_scs_col""Copied to clipboard:\e[0m $input"
+        fi
+    fi
+}
+alias v="xclip -o -selection clipboard"
+
+
+
+
+cd_func ()
+{
+  local x2 the_new_dir adir index
+  local -i cnt
+
+  if [[ $1 ==  "--" ]]; then
+    dirs -v | grep -v -e " 0 "
+    return 0
+  fi
+
+  the_new_dir=$1
+  [[ -z $1 ]] && the_new_dir=$HOME
+
+  if [[ ${the_new_dir:0:1} == '-' ]]; then
+    #
+    # Extract dir N from dirs
+    index=${the_new_dir:1}
+    [[ -z $index ]] && index=1
+    adir=$(dirs +$index)
+    [[ -z $adir ]] && return 1
+    the_new_dir=$adir
+  fi
+
+  #
+  # '~' has to be substituted by ${HOME}
+  [[ ${the_new_dir:0:1} == '~' ]] && the_new_dir="${HOME}${the_new_dir:1}"
+
+  #
+  # Now change to the new dir and add to the top of the stack
+  pushd "${the_new_dir}" > /dev/null
+  [[ $? -ne 0 ]] && return 1
+  the_new_dir=$(pwd)
+
+  #
+  # Trim down everything beyond 11th entry
+  popd -n +11 2>/dev/null 1>/dev/null
+
+  #
+  # Remove any other occurence of this dir, skipping the top of the stack
+  for ((cnt=1; cnt <= 10; cnt++)); do
+    x2=$(dirs +${cnt} 2>/dev/null)
+    [[ $? -ne 0 ]] && return 0
+    [[ ${x2:0:1} == '~' ]] && x2="${HOME}${x2:1}"
+    if [[ "${x2}" == "${the_new_dir}" ]]; then
+      popd -n +$cnt 2>/dev/null 1>/dev/null
+      cnt=cnt-1
+    fi
+  done
+
+  return 0
+}
+
+alias cd=cd_func
+
+
+
+alias dstat="dstat -aft 1"
+
+# modify ls
+# enable color support of ls
+eval "`dircolors -b`"
+export TIME_STYLE=long-iso
+alias ls="ls --color=auto -lh "
+alias ll="ls -lh --color=auto"
+alias la="ls -lah --color=auto"
+
+# extend basics
+alias sublime="/vol/clf/opt/sublime/sublime"
+alias fx="screen -d -m firefox"
+alias detatched="screen -d -m"
+alias gedit="screen -d -m gedit"
+alias ..="cd .."
+alias mkdir="mkdir -pv"
+alias tree="tree -aCshpF"
+alias dir="tree -d"
+alias rm="rm -Iv"
+alias cp='cp -v'
+alias htop="hhtop" #makes it restart on error
+alias grep="grep --color=auto"
+alias grepp="grep -T -i -H -n"
+
+alias jenkins="export PYTHONPATH=/homes/nkoester/sandboxes/iJenkinsCLI/lib/python2.7/site-packages/ && /homes/nkoester/sandboxes/iJenkinsCLI/bin/iJenkins"
+
+function highlight {
+    while read data; do
+          grep --color -E '$1|$'
+    done
+}
+
+function grepextract {
+    command grep --color=auto -i -o -e "\S*$1\S*"
+}
+alias greparound="grep --color=auto -T -i -H -n -C 3"
+alias psg="ps aux | grep -v grep | grep -i -e VSZ -e"
+
+# watch command
+alias watch="watch -n 1 -d"
+function watchps {
+    watch -n1 -d  "ps -ef | grep $1 | grep -v grep"
+}
+
+
+# extracts about everything
+function extract {
+ if [ -z "$1" ]; then
+    # display usage if no parameters given
+    echo "Usage: extract <path/file_name>.<zip|rar|bz2|gz|tar|tbz2|tgz|Z|7z|xz|ex|tar.bz2|tar.gz|tar.xz>"
+ else
+    if [ -f $1 ] ; then
+        # NAME=${1%.*}
+        # mkdir $NAME && cd $NAME
+        case $1 in
+          *.tar.bz2)   tar xvjf ../$1    ;;
+          *.tar.gz)    tar xvzf ../$1    ;;
+          *.tar.xz)    tar xvJf ../$1    ;;
+          *.lzma)      unlzma ../$1      ;;
+          *.bz2)       bunzip2 ../$1     ;;
+          *.rar)       unrar x -ad ../$1 ;;
+          *.gz)        gunzip ../$1      ;;
+          *.tar)       tar xvf ../$1     ;;
+          *.tbz2)      tar xvjf ../$1    ;;
+          *.tgz)       tar xvzf ../$1    ;;
+          *.zip)       unzip ../$1       ;;
+          *.Z)         uncompress ../$1  ;;
+          *.7z)        7z x ../$1        ;;
+          *.xz)        unxz ../$1        ;;
+          *.exe)       cabextract ../$1  ;;
+          *)           echo "extract: '$1' - unknown archive method" ;;
+        esac
+    else
+        echo "$1 - file does not exist"
+    fi
+fi
+}
+
+# disable suspend
+stty -ixon
+
+## ranger setup
+export PYTHONPATH=/homes/nkoester/bin/opt/ranger/lib/python2.7/site-packages:$PYTHONPATH
+
+#==================================================
+## TECHFAK related
+#==================================================
+alias mdraw="module load magicdraw && /vol/magicdraw/16.5-PE/bin/mduml"
+alias windows="/vol/rdesktop/bin/startWindows_freerdp"
+alias ec="~/bin/eclipse/eclipse -vmargs -Xms2048m -Xmx4096m -XX:PermSize=1024m -XX:MaxPermSize=2048m"
+alias ec2="/vol/clf/opt/eclipse_indigo_x86_64/eclipse -vmargs -XX:MaxPermSize=1024m -Xms1024m -Xmx1024m"
+
+function noproxy(){
+    unset MAIL
+    unset http_proxy
+    unset ftp_proxy
+    unset https_proxy
+}
+
+#source /homes/nkoester/env/fsmt_env
+source /homes/nkoester/env/jrnl_env
+
+
+# TODO.TXT setup
+export TODOTXT_DEFAULT_ACTION=lsa
+# Sort by priority and then by number
+export TODOTXT_SORT_COMMAND='env LC_COLLATE=C sort -k 2,2 -k 1,1n'
+# todo.txt completion source
+source /homes/nkoester/bin/opt/todotxt/todo_completion
+alias t="$HOME/bin/todo.sh -c -a -t -d $HOME/bin/opt/todotxt/todo.cfg"
+complete -F _todo t
+alias todo="$HOME/bin/todo.sh -c -a -t -d $HOME/bin/opt/todotxt/todo.cfg"
+complete -F _todo todo
+alias todo.sh="$HOME/bin/todo.sh -c -a -t -d $HOME/bin/opt/todotxt/todo.cfg"
+complete -F _todo todo.sh
+
+# hack for the netboot file existance issue
+function touch_shit () {
+    if [ $# -eq 0 ]; then
+	    echo "please provide a path where to touch all files ..."
+        echo "Usage: command [PATH_TO_FOLDER]"
+    else
+        echo "being quite touchy touchy in $1"
+        find $1 -type f -name '*' -exec touch {} \;	
+    fi
+}
+
+# gpg-agent (due to old gpg-agent version in techfak env
+if [ -f ~/.gpg-agent-info ]
+then
+    eval export `cat ~/.gpg-agent-info`
+fi
+/usr/bin/gpg-agent > /dev/null 2> /dev/null
+if [ "$?" -ne 0 ]
+then
+    # old file, we need to start it again
+    eval `/usr/bin/gpg-agent --daemon --write-env-file`
+fi
+
+#==================================================
+## LSP CSRA
+#==================================================
+
+function choice_l_g(){
+    if ! [[ "$CONFIRM_OVERRIDE" = "YES" ]]; then
+        read -n1 -p "[l]ocal, [g]lobal or [*]abort? " doit 
+        case $doit in  
+          l|L) printf "\nsourcing LOCAL\n" ; return 0 ;; 
+          g|G) printf "\nsourcing GLOBAL\n"; return 1 ;; 
+          *) printf "\nUser abort ...\n"; return -1 ;; 
+        esac
+    fi
+}
+
+function csraenv() {
+    
+    if [ ! cor ];then
+        ai
+    fi
+
+    printf "\nsourcing vdemo env..."
+    read -n1 -p "[l]ocal, [g]lobal or [*]abort? " doit 
+    case $doit in  
+      l|L) printf "\nsourcing LOCAL\n\n"
+           printf "$ source /vol/csra/releases/trusty/lsp-csra-nightly/etc/vdemo_scripts/lsp-csra-base-localhost.sh"
+           source /vol/csra/releases/trusty/lsp-csra-nightly/etc/vdemo_scripts/lsp-csra-base-localhost.sh
+           export PS1="${PS1_row1}${COLOR_BRACKETS}[\[\033[33m\]\[\033[1;40m\]vdemo-env:csra-local${COLOR_BRACKETS}]\[\e[0;32m\]${PS1_row2}"
+           cd $prefix
+           return 0 ;; 
+      g|G) printf "\nsourcing GLOBAL\n\n"; 
+           printf "$ source /vol/csra/releases/trusty/lsp-csra-nightly/etc/vdemo_scripts/lsp-csra-base.sh"
+           source /vol/csra/releases/trusty/lsp-csra-nightly/etc/vdemo_scripts/lsp-csra-base.sh
+           export PS1="${PS1_row1}${COLOR_BRACKETS}[\[\033[33m\]\[\033[1;40m\]vdemo-env:csra-global${COLOR_BRACKETS}]\[\e[0;32m\]${PS1_row2}"
+           cd $prefix
+           return 0 ;; 
+      *) printf "\nUser abort ...\n"; return 1 ;; 
+    esac
+}
+#source /homes/nkoester/env/fsmt_env
+
+
+#==================================================
+## LTM
+#==================================================
+function ltm-kill() {
+    GREP_RESULT=`ps -ao pid,cmd | grep -v grep | grep -i -e VSZ -e "ltm-core-py" | grep -i "python"`
+    PROCESS_PID=`ps -ao pid,cmd | grep -v grep | grep -i -e VSZ -e "ltm-core-py" | grep -i "python" | sed 's,^ *,,; s, *$,,' | tr -s " " | cut -d " " -f 1`
+
+    if [ ! -z "$PROCESS_PID" ];
+      then
+        printf "grep result: \n$GREP_RESULT\n"
+        echo "will kill PID $PROCESS_PID..."
+        kill -15 $PROCESS_PID
+    fi
+}
+
+# Change to home directory
+cd
