@@ -7,12 +7,17 @@
 #################################################################
 
 MANPATH=/usr/share/man:$MANPATH
-PATH=/homes/nkoester/.local/bin:/homes/nkoester/bin:$PATH
+PATH=$HOME/.local/bin:$HOME/bin:$PATH
+
 # a fix for the additional slash at the end which lead to weird errors 
-export HOME="/homes/nkoester"
+export HOME=${HOME%/} 
 
 # source our own bash completions
-source ~/.bash_completion.d/*
+BASH_COMPLETIONS_FOLDER="${HOME}.bash_completion.d"
+if [ -d "$BASH_COMPLETIONS_FOLDER" ]; then
+    source "~/${BASH_COMPLETIONS_FOLDER}/*"
+fi
+
 
 
 #==================================================
@@ -214,7 +219,7 @@ alias htop="hhtop" #makes it restart on error
 alias grep="grep --color=auto"
 alias grepp="grep -T -i -H -n"
 
-alias jenkins="export PYTHONPATH=/homes/nkoester/sandboxes/iJenkinsCLI/lib/python2.7/site-packages/ && /homes/nkoester/sandboxes/iJenkinsCLI/bin/iJenkins"
+alias jenkins="export PYTHONPATH=$HOME/sandboxes/iJenkinsCLI/lib/python2.7/site-packages/ && $HOME/sandboxes/iJenkinsCLI/bin/iJenkins"
 
 function highlight {
     while read data; do
@@ -272,7 +277,7 @@ fi
 stty -ixon
 
 ## ranger setup
-export PYTHONPATH=/homes/nkoester/bin/opt/ranger/lib/python2.7/site-packages:$PYTHONPATH
+export PYTHONPATH=$HOME/bin/opt/ranger/lib/python2.7/site-packages:$PYTHONPATH
 
 #==================================================
 ## TECHFAK related
@@ -289,8 +294,8 @@ function noproxy(){
     unset https_proxy
 }
 
-#source /homes/nkoester/env/fsmt_env
-source /homes/nkoester/env/jrnl_env
+#source $HOME/env/fsmt_env
+source $HOME/env/jrnl_env
 
 
 # TODO.TXT setup
@@ -298,7 +303,7 @@ export TODOTXT_DEFAULT_ACTION=lsa
 # Sort by priority and then by number
 export TODOTXT_SORT_COMMAND='env LC_COLLATE=C sort -k 2,2 -k 1,1n'
 # todo.txt completion source
-source /homes/nkoester/bin/opt/todotxt/todo_completion
+source $HOME/bin/opt/todotxt/todo_completion
 alias t="$HOME/bin/todo.sh -c -a -t -d $HOME/bin/opt/todotxt/todo.cfg"
 complete -F _todo t
 alias todo="$HOME/bin/todo.sh -c -a -t -d $HOME/bin/opt/todotxt/todo.cfg"
@@ -368,7 +373,7 @@ function csraenv() {
       *) printf "\nUser abort ...\n"; return 1 ;; 
     esac
 }
-#source /homes/nkoester/env/fsmt_env
+#source $HOME/env/fsmt_env
 
 
 #==================================================
