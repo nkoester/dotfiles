@@ -1,4 +1,8 @@
+#!/bin/bash
 # nkoester .bashrc
+
+
+source $HOME/.gpg-agent-techfak
 
 # ask for confirmation...
 function confirm(){

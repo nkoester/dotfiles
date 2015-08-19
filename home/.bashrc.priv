@@ -13,9 +13,9 @@ PATH=${HOME}/local/bin:$HOME/.local/bin:$HOME/bin:$PATH
 export HOME=${HOME%/} 
 
 # source our own bash completions
-BASH_COMPLETIONS_FOLDER="${HOME}.bash_completion.d"
+BASH_COMPLETIONS_FOLDER="${HOME}/.bash_completion.d"
 if [ -d "$BASH_COMPLETIONS_FOLDER" ]; then
-    source "~/${BASH_COMPLETIONS_FOLDER}/*"
+    for f in ${BASH_COMPLETIONS_FOLDER}/*; do source $f; done
 fi
 
 
@@ -322,17 +322,7 @@ function touch_shit () {
     fi
 }
 
-# gpg-agent (due to old gpg-agent version in techfak env
-if [ -f ~/.gpg-agent-info ]
-then
-    eval export `cat ~/.gpg-agent-info`
-fi
-/usr/bin/gpg-agent > /dev/null 2> /dev/null
-if [ "$?" -ne 0 ]
-then
-    # old file, we need to start it again
-    eval `/usr/bin/gpg-agent --daemon --write-env-file`
-fi
+
 
 #==================================================
 ## LSP CSRA

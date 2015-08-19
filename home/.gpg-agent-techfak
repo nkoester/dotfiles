@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# gpg-agent (due to old gpg-agent version in techfak env
+if [ -f ~/.gpg-agent-info ]
+then
+    eval export `cat ~/.gpg-agent-info`
+fi
+/usr/bin/gpg-agent > /dev/null 2> /dev/null
+if [ "$?" -ne 0 ]
+then
+    # old file, we need to start it again
+    eval `/usr/bin/gpg-agent --daemon --write-env-file`
+fi
