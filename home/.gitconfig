@@ -1,0 +1,25 @@
+[core]
+    excludesfile = ~/.gitignore_global
+    editor = vim
+[user]
+    name = Norman Köster
+    email = nkoester@techfak.uni-bielefeld.de
+[alias]
+    ci = commit
+    co = checkout
+    br = branch -a
+    rpull = pull --rebase
+    pfush = push
+    st = status --short --branch
+    ls = log --pretty=format:"%C(yellow)%h\\ %C(magenta)%ad%Cred%d\\ %C(blue)%<(20)%cn\\ %C(white)%s" --decorate --date=short
+    la = log --pretty=format:"%C(yellow)%h\\ %C(green)%ad%Cred%d\\ %C(blue)[%cn]\\ %C(cyan)%s" --decorate --numstat --
+    graph = log --graph --oneline --decorate --all
+[push]
+    default = current
+[color]
+    ui = auto
+[grep]
+    lineNumber = True
+    fullName = True
+  [include]
+    path = ~/.gitconfig_private

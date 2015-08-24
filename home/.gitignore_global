@@ -1,0 +1,58 @@
+# Compiled source
+build/
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
+*.pyc
+*.pyo
+*.egg-info
+eggs
+
+# Packages
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# Logs and databases
+*.log
+*.sql
+*.sqlite
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# LaTeX Stuff
+*-blx.bib
+*.aux
+*.bbl
+*.blg
+*.nav
+*.pdf
+*.snm
+*.toc
+*.vrb
+
+# Editor swap files
+*.swp
+*.bak
+
+# Backup files
+*~
+
+# eclipse files
+.project
