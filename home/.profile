@@ -16,7 +16,7 @@ if [ -n "$BASH_VERSION" ]; then
     fi
 fi
 
-export TERMINAL="termite"
+export TERMINAL="/home/nkoester/local/bin/termite"
 
 # set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/bin" ] ; then
