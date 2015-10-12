@@ -1,7 +1,7 @@
 #!/bin/bash
 # nkoester .bashrc
 
-
+# gpg-agent (due to old gpg-agent version in techfak env
 source $HOME/.gpg-agent-techfak
 
 # ask for confirmation...
