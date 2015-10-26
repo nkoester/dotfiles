@@ -7,7 +7,7 @@
 #################################################################
 
 MANPATH=/usr/share/man:$MANPATH
-PATH=${HOME}/local/bin:$HOME/.local/bin:$HOME/bin:$PATH
+PATH=${HOME}/local/bin:/homes/nkoester/local/usr/local/bin:$HOME/.local/bin:$HOME/bin:$PATH
 
 # a fix for the additional slash at the end which lead to weird errors 
 export HOME=${HOME%/} 
