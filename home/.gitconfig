@@ -1,6 +1,7 @@
 [core]
     excludesfile = ~/.gitignore_global
     editor = vim
+	autocrlf = input
 [user]
     name = Norman Köster
     email = nkoester@techfak.uni-bielefeld.de
@@ -26,3 +27,7 @@
     fullName = True
 [include]
     path = ~/.gitconfig_private
+
+[merge "mps"]
+	name = MPS merge driver
+	driver = "\"/homes/nkoester/.MPS32/config/mps-merger.sh\" %O %A %B %L"
