@@ -7,7 +7,7 @@
 #################################################################
 
 MANPATH=/usr/share/man:$MANPATH
-PATH=${HOME}/local/bin:/homes/nkoester/local/usr/local/bin:$HOME/.local/bin:$HOME/bin:$PATH
+PATH=${HOME}/local/bin:${HOME}/local/usr/bin:$HOME/.local/bin:$HOME/bin:$PATH
 
 # a fix for the additional slash at the end which lead to weird errors 
 export HOME=${HOME%/} 
@@ -211,7 +211,7 @@ alias detatched="screen -d -m"
 alias gedit="screen -d -m gedit"
 alias ..="cd .."
 alias mkdir="mkdir -pv"
-alias tree="tree -aCshpF"
+alias tree="tree -CshpF"
 alias dir="tree -d"
 alias rm="rm -Iv"
 alias cp='cp -v'
