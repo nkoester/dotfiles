@@ -5,7 +5,8 @@ $include /etc/inputrc
 "\C-[[B": history-search-forward
 
 # remap reverse serach to CTRL-E
-"\C-e": reverse-search-history
+# dont use it since we use hh
+#"\C-e": reverse-search-history
 
 # completion options
 set completion-ignore-case on
