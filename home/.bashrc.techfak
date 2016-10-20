@@ -4,6 +4,14 @@
 # gpg-agent (due to old gpg-agent version in techfak env
 source $HOME/.gpg-agent-techfak
 
+function java8(){
+     echo 'Changing to /vol/java8...'
+     export JAVA_HOME=/vol/java8
+     export PATH=/vol/java8/bin:$PATH
+     which java
+     java -version
+}
+
 # ask for confirmation...
 function confirm(){
     if ! [[ "$CONFIRM_OVERRIDE" = "YES" ]]; then
