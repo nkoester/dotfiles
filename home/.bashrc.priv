@@ -7,6 +7,18 @@
 #################################################################
 
 MANPATH=/usr/share/man:$MANPATH
+man() {
+    env \
+        LESS_TERMCAP_mb=$(printf "\e[1;31m") \
+        LESS_TERMCAP_md=$(printf "\e[1;31m") \
+        LESS_TERMCAP_me=$(printf "\e[0m") \
+        LESS_TERMCAP_se=$(printf "\e[0m") \
+        LESS_TERMCAP_so=$(printf "\e[1;44;33m") \
+        LESS_TERMCAP_ue=$(printf "\e[0m") \
+        LESS_TERMCAP_us=$(printf "\e[1;32m") \
+            man "$@"
+}
+
 PATH=${HOME}/local/bin:${HOME}/local/usr/bin:$HOME/.local/bin:$HOME/bin:$PATH
 
 # a fix for the additional slash at the end which lead to weird errors 
@@ -90,9 +102,9 @@ shopt -s globstar
 shopt -s hostcomplete
 
 # hh control...
-export HH_CONFIG=rawhistory,keywords,hicolor,warning,debug
+export HH_CONFIG=rawhistory,keywords,hicolor,warning,debug,prompt-bottom
 if [[ $- =~ .*i.* ]]; then bind '"\C-r": "\C-a hh \C-j"'; fi
-
+export HH_PROMPT='$ '
 alias stat='cut -f1 -d" " ~/.bash_history | sort | uniq -c | sort -nr | head -n 30'
 source /etc/bash_completion
 
@@ -277,7 +289,7 @@ fi
 stty -ixon
 
 ## ranger setup
-export PYTHONPATH=$HOME/bin/opt/ranger/lib/python2.7/site-packages:$PYTHONPATH
+#export PYTHONPATH=$HOME/bin/opt/ranger/lib/python2.7/site-packages:$PYTHONPATH
 
 #==================================================
 ## TECHFAK related
