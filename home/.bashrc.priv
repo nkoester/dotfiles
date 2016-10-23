@@ -202,6 +202,14 @@ cd_func ()
   return 0
 }
 
+netbeans_screened () 
+{ 
+    which netbeans
+    screen -d -m netbeans -J-Dswing.aatext=TRUE -J-Dawt.useSystemAAFontSettings=on -J-Xms512m -J-Xmx2048m -J-XX:PermSize=512m -J-XX:MaxPermSize=2048m -J-Xverify:none -J-Dapple.laf.useScreenMenuBar=true
+}
+
+
+
 alias cd=cd_func
 
 

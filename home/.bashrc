@@ -13,6 +13,7 @@ if [ "$TERM" != "dumb" ]; then
     source $HOME/.bashrc.priv
 fi
 
+export TERMINAL="/usr/bin/termite"
 
 source "$HOME/.homesick/repos/homeshick/homeshick.sh"
 source "$HOME/.homesick/repos/homeshick/completions/homeshick-completion.bash"
