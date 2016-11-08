@@ -17,6 +17,7 @@ if [ -n "$BASH_VERSION" ]; then
 fi
 
 export TERMINAL="/home/nkoester/local/bin/termite"
+export CUPS_SERVER="cups.techfak.uni-bielefeld.de:631"
 
 # set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/bin" ] ; then

@@ -2,11 +2,11 @@
 # fonts
 # font = Monospace 9
 # font = Terminus 9
-font = Droid Sans Mono 8
+font = Droid Sans Mono 10
 
 # misc
 scrollback_lines = 100000
-scroll_on_output = true
+scroll_on_output = false
 scroll_on_keystroke = true
 audible_bell = false
 visible_bell = true
@@ -14,7 +14,7 @@ urgent_on_bell = true
 mouse_autohide = false
 dynamic_title = true
 clickable_url = true
-browser = firefox
+browser = chromium
 search_wrap = true
 icon_name = terminal
 #geometry = 960x1154
@@ -24,13 +24,13 @@ allow_bold = true
 size_hints = true
 
 # "system", "on" or "off"
-cursor_blink = off
+cursor_blink = system
 
 # "block", "underline" or "ibeam"
 cursor_shape = ibeam
 
 # $BROWSER is used by default if set, with xdg-open as a fallback
-#browser = xdg-open
+browser = xdg-open
 
 # set size hints for the window
 #size_hints = false
