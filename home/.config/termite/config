@@ -2,7 +2,7 @@
 # fonts
 # font = Monospace 9
 # font = Terminus 9
-font = Droid Sans Mono 10
+font = Droid Sans Mono for Powerline 9
 
 # misc
 scrollback_lines = 100000
