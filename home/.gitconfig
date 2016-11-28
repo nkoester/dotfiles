@@ -38,5 +38,5 @@
 	name = MPS merge driver
 	driver = "\"/homes/nkoester/.MPS32/config/mps-merger.sh\" %O %A %B %L"
 
-[credentials]    
+[credential]    
     helper = !pass-git-helper $@ 
