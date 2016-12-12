@@ -44,7 +44,8 @@ browser = xdg-open
 # special
 foreground      = #f1ebeb
 foreground_bold = #f1ebeb
-cursor          = #f1ebeb
+cursor          = #cc6a2c
+#f1ebeb
 background      = #272822
 
 # black

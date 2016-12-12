@@ -1,3 +1,11 @@
+! arch linux settings to aviod clown cursor in multi screen setup
+Xcursor.theme: Adwaita
+Xcursor.size: 16
+
+! colorscheme fix
+XTerm*reverseVideo:true
+
+
 xscreensaver.splash: false
 
 !font settings
