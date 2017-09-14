@@ -3,6 +3,7 @@
 # font = Monospace 9
 #font = Terminus 9
 font = Droid Sans Mono 9
+#font = DejaVu Sans Mono 9
 #font = Droid Sans Mono for Powerline 10
 
 # misc
@@ -46,7 +47,10 @@ foreground      = #f1ebeb
 foreground_bold = #f1ebeb
 cursor          = #cc6a2c
 #f1ebeb
-background      = #272822
+#background      = #272822
+#background = rgba(250, 150, 150, 0.399)
+background = rgba(10, 10, 10, 0.9)
+
 
 # black
 color0  = #48483e

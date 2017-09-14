@@ -21,8 +21,8 @@ man() {
 
 PATH=${HOME}/local/bin:${HOME}/local/usr/bin:$HOME/.local/bin:$HOME/bin:$PATH
 
-# a fix for the additional slash at the end which lead to weird errors 
-export HOME=${HOME%/} 
+# a fix for the additional slash at the end which lead to weird errors
+export HOME=${HOME%/}
 
 # source our own bash completions
 BASH_COMPLETIONS_FOLDER="${HOME}/.bash_completion.d"
@@ -30,7 +30,11 @@ if [ -d "$BASH_COMPLETIONS_FOLDER" ]; then
     for f in ${BASH_COMPLETIONS_FOLDER}/*; do source $f; done
 fi
 
+# Set GPG TTY
+export GPG_TTY=$(tty)
 
+# Refresh gpg-agent tty in case user switches into an X session
+gpg-connect-agent updatestartuptty /bye >/dev/null
 
 #==================================================
 ## set colors to 256
@@ -38,14 +42,17 @@ fi
 if [[ $TERM == xterm-termite ]]; then
   # . /etc/profile.d/vte.sh
   # __vte_prompt_command
-  : 
+  :
 else
   # assuming gnome-terminal here ...
   export TERM="xterm-256color"
   echo -ne '\e]12;white\a'
 fi
 
-
+# schroot
+if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
+    debian_chroot=$(cat /etc/debian_chroot)
+fi
 
 #=================================================
 ## redefine prompt
@@ -66,7 +73,7 @@ COLOR_BRACKETS='\[\e[0;37m\]'
 COLOR_DESC='\[\e[0;32m\]'
 function set_default_ps1() {
     export PS1_row1="\n\
-${COLOR_BRACKETS}[\[\e[1;32m\]\u${COLOR_DESC} @ \[\e[1;31m\]\h${COLOR_BRACKETS}] \
+${debian_chroot:+($debian_chroot)}${COLOR_BRACKETS}[\[\e[1;32m\]\u${COLOR_DESC} @ \[\e[1;31m\]\h${COLOR_BRACKETS}] \
 ${COLOR_BRACKETS}[${COLOR_DESC}\[\e[1;31m\]`cat ~/.bash_history_eternal| sed '/^\s*#/d;/^\s*$/d' | wc -l`${COLOR_BRACKETS}/\[\e[1;31m\]\j${COLOR_BRACKETS}] \
 ${COLOR_BRACKETS}[${COLOR_DESC}\t - \D{%d.%m.%y}${COLOR_BRACKETS}] \
 "
@@ -89,7 +96,7 @@ export HISTSIZE=
 export HISTFILE=~/.bash_history_eternal
 export HISTCONTROL=ignoreboth:erasedups
 export HISTTIMEFORMAT='%F %T '
-export HISTIGNORE='la:ll:..:ls:bg:fg:history:stat:which:csra:htop:make:pwd:hh:[bf]g:clear:git log:git push:git pull:git status:git diff:ai:csra-env:tree'
+export HISTIGNORE='la:ll:..:ls:bg:fg:history:stat:which:csra:htop:make:pwd:hh:[bf]g:clear:git log:git push:git pull:git status:git diff:ai:csra-env:tree:fold'
 #PROMPT_COMMAND='history -a ; history -n ; $PROMPT_COMMAND'
 PROMPT_COMMAND='history -a ; $PROMPT_COMMAND'
 shopt -s histappend
@@ -105,7 +112,7 @@ shopt -s hostcomplete
 export HH_CONFIG=rawhistory,keywords,hicolor,warning,debug,prompt-bottom
 if [[ $- =~ .*i.* ]]; then bind '"\C-r": "\C-a hh \C-j"'; fi
 export HH_PROMPT='$ '
-alias stat='cut -f1 -d" " ~/.bash_history | sort | uniq -c | sort -nr | head -n 30'
+alias stat='cut -f1 -d" " ~/.bash_history_eternal | sort | uniq -c | sort -nr | head -n 30'
 source /etc/bash_completion
 
 #==================================================
@@ -202,17 +209,16 @@ cd_func ()
   return 0
 }
 
-netbeans_screened () 
-{ 
+netbeans_screened ()
+{
     which netbeans
     screen -d -m netbeans -J-Dswing.aatext=TRUE -J-Dawt.useSystemAAFontSettings=on -J-Xms512m -J-Xmx2048m -J-XX:PermSize=512m -J-XX:MaxPermSize=2048m -J-Xverify:none -J-Dapple.laf.useScreenMenuBar=true
 }
 
-
-
 alias cd=cd_func
 
-
+alias vim="nvim"
+alias maket="make $@ ; (aplay -q ~/Documents/toasty.wav > /dev/null 2>&1 &)"
 
 alias dstat="dstat -aft 1"
 
@@ -235,9 +241,9 @@ alias tree="tree -CshpF"
 alias dir="tree -d"
 alias rm="rm -Iv"
 alias cp='cp -v'
-alias htop="hhtop" #makes it restart on error
 alias grep="grep --color=auto"
 alias grepp="grep -T -i -H -n"
+alias g="git"
 
 alias jenkins="export PYTHONPATH=$HOME/sandboxes/iJenkinsCLI/lib/python2.7/site-packages/ && $HOME/sandboxes/iJenkinsCLI/bin/iJenkins"
 
@@ -338,7 +344,7 @@ function touch_shit () {
         echo "Usage: command [PATH_TO_FOLDER]"
     else
         echo "being quite touchy touchy in $1"
-        find $1 -type f -name '*' -exec touch {} \;	
+        find $1 -type f -name '*' -exec touch {} \;
     fi
 }
 
@@ -350,37 +356,37 @@ function touch_shit () {
 
 function choice_l_g(){
     if ! [[ "$CONFIRM_OVERRIDE" = "YES" ]]; then
-        read -n1 -p "[l]ocal, [g]lobal or [*]abort? " doit 
-        case $doit in  
-          l|L) printf "\nsourcing LOCAL\n" ; return 0 ;; 
-          g|G) printf "\nsourcing GLOBAL\n"; return 1 ;; 
-          *) printf "\nUser abort ...\n"; return -1 ;; 
+        read -n1 -p "[l]ocal, [g]lobal or [*]abort? " doit
+        case $doit in
+          l|L) printf "\nsourcing LOCAL\n" ; return 0 ;;
+          g|G) printf "\nsourcing GLOBAL\n"; return 1 ;;
+          *) printf "\nUser abort ...\n"; return -1 ;;
         esac
     fi
 }
 
 function csraenv() {
-    
+
     if [ ! cor ];then
         ai
     fi
 
     printf "\nsourcing vdemo env..."
-    read -n1 -p "[l]ocal, [g]lobal or [*]abort? " doit 
-    case $doit in  
+    read -n1 -p "[l]ocal, [g]lobal or [*]abort? " doit
+    case $doit in
       l|L) printf "\nsourcing LOCAL\n\n"
            printf "$ source /vol/csra/releases/trusty/lsp-csra-nightly/etc/vdemo_scripts/lsp-csra-base-localhost.sh"
            source /vol/csra/releases/trusty/lsp-csra-nightly/etc/vdemo_scripts/lsp-csra-base-localhost.sh
            export PS1="${PS1_row1}${COLOR_BRACKETS}[\[\033[33m\]\[\033[1;40m\]vdemo-env:csra-local${COLOR_BRACKETS}]\[\e[0;32m\]${PS1_row2}"
            cd $prefix
-           return 0 ;; 
-      g|G) printf "\nsourcing GLOBAL\n\n"; 
+           return 0 ;;
+      g|G) printf "\nsourcing GLOBAL\n\n";
            printf "$ source /vol/csra/releases/trusty/lsp-csra-nightly/etc/vdemo_scripts/lsp-csra-base.sh"
            source /vol/csra/releases/trusty/lsp-csra-nightly/etc/vdemo_scripts/lsp-csra-base.sh
            export PS1="${PS1_row1}${COLOR_BRACKETS}[\[\033[33m\]\[\033[1;40m\]vdemo-env:csra-global${COLOR_BRACKETS}]\[\e[0;32m\]${PS1_row2}"
            cd $prefix
-           return 0 ;; 
-      *) printf "\nUser abort ...\n"; return 1 ;; 
+           return 0 ;;
+      *) printf "\nUser abort ...\n"; return 1 ;;
     esac
 }
 #source $HOME/env/fsmt_env

@@ -18,8 +18,9 @@
     la = log --pretty=format:"%C(yellow)%h\\ %C(green)%ad%Cred%d\\ %C(blue)[%cn]\\ %C(cyan)%s" --decorate --numstat --
     graph = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(dim white)%<(8)%cn%C(reset)%C(bold yellow)%d%C(reset) %C(white)%s%C(reset)' --all
     graph2 = log --graph --abbrev-commit --decorate --date=local --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(dim white)%an%C(reset): %C(white)%s%C(reset)' --all
-    tree = "forest --pretty=format:'%C(reset)%C(bold blue)[%h]%C(reset) %C(reset)%C(bold green)[%ar]%C(reset)%C(reset)%C(bold yellow)%d%C(reset) %C(reset)%C(bold white)%s%C(reset) %C(reset)%C(dim white)(%cn)%C(reset)' --style=10 --reverse -n 130"
-    treeless = "!f() { git-forest --pretty=format:'%C(reset)%C(bold blue)[%h]%C(reset) %C(reset)%C(bold green)[%ar]%C(reset)%C(reset)%C(bold yellow)%d%C(reset) %C(reset)%C(bold white)%s%C(reset) %C(reset)%C(dim white)(%cn)%C(reset)' --style=10 --reverse $@ | less +G -r ; }; f"
+    t = "forest --all --pretty=format:'%C(reset)%C(bold blue)[%h]%C(reset) %C(reset)%C(bold green)[%ar]%C(reset)%C(reset)%C(bold yellow)%d%C(reset) %C(reset)%C(bold white)%s%C(reset) %C(reset)%C(dim white)(%cn)%C(reset)' --style=10 --reverse -n 130"
+    tree = "forest --all --pretty=format:'%C(reset)%C(bold blue)[%h]%C(reset) %C(reset)%C(bold green)[%ar]%C(reset)%C(reset)%C(bold yellow)%d%C(reset) %C(reset)%C(bold white)%s%C(reset) %C(reset)%C(dim white)(%cn)%C(reset)' --style=10 --reverse -n 130"
+    treeless = "!f() { git-forest --all --pretty=format:'%C(reset)%C(bold blue)[%h]%C(reset) %C(reset)%C(bold green)[%ar]%C(reset)%C(reset)%C(bold yellow)%d%C(reset) %C(reset)%C(bold white)%s%C(reset) %C(reset)%C(dim white)(%cn)%C(reset)' --style=10 --reverse $@ | less +G -r ; }; f"
 
 [push]
     default = current
@@ -36,7 +37,7 @@
 
 [merge "mps"]
 	name = MPS merge driver
-	driver = "\"/homes/nkoester/.MPS32/config/mps-merger.sh\" %O %A %B %L"
+	driver = "\"/homes/nkoester/.MPS34/config/mps-merger.sh\" %O %A %B %L"
 
-[credential]    
-    helper = !pass-git-helper $@ 
+[credential]
+    helper = !pass-git-helper $@
