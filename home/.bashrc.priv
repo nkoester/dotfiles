@@ -21,14 +21,17 @@ man() {
 
 PATH=${HOME}/local/bin:${HOME}/local/usr/bin:$HOME/.local/bin:$HOME/bin:$PATH
 
+PATH=${PATH}:/home/nkoester/.npm/bin
+
 # a fix for the additional slash at the end which lead to weird errors
 export HOME=${HOME%/}
 
+
 # source our own bash completions
-BASH_COMPLETIONS_FOLDER="${HOME}/.bash_completion.d"
-if [ -d "$BASH_COMPLETIONS_FOLDER" ]; then
-    for f in ${BASH_COMPLETIONS_FOLDER}/*; do source $f; done
-fi
+#BASH_COMPLETIONS_FOLDER="${HOME}/.bash_completion.d"
+#if [ -d "$BASH_COMPLETIONS_FOLDER" ]; then
+#    for f in ${BASH_COMPLETIONS_FOLDER}/*; do source $f; done
+#fi
 
 # Set GPG TTY
 export GPG_TTY=$(tty)
@@ -83,8 +86,18 @@ ${COLOR_BRACKETS}[${COLOR_DESC}\t - \D{%d.%m.%y}${COLOR_BRACKETS}] \
 
     export PS1="${PS1_row1}${PS1_row2}"
 }
-
 set_default_ps1
+
+
+#echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD}\007"
+#PROMPT_COMMAND_PART='${USER}@${HOSTNAME}: ${PWD}'
+#export PROMPT_COMMAND='echo -ne "\033]0;${COMMAND_PROMT_PART}${PWD}\007"'
+#trap 'echo -ne "\033]2;${USER}@${HOSTNAME}: ${PWD} -- $(`history 1 | cut -c 27-`)\007"' DEBUG
+function settitle {
+    LASTCMD=$(history 1 | cut -c 28-)
+    echo -ne "\033]0;[${USER}@${HOSTNAME}]: [${PWD}] \$ ${LASTCMD}\007";
+}
+trap 'settitle' DEBUG
 
 
 #==================================================
@@ -96,7 +109,7 @@ export HISTSIZE=
 export HISTFILE=~/.bash_history_eternal
 export HISTCONTROL=ignoreboth:erasedups
 export HISTTIMEFORMAT='%F %T '
-export HISTIGNORE='la:ll:..:ls:bg:fg:history:stat:which:csra:htop:make:pwd:hh:[bf]g:clear:git log:git push:git pull:git status:git diff:ai:csra-env:tree:fold'
+export HISTIGNORE='la:ll:..:ls:bg:fg:history:stat:which:csra:htop:make:pwd:hh:[bf]g:clear:git log:git push:git pull:git status:git diff:ai:csra-env:tree:fold:history'
 #PROMPT_COMMAND='history -a ; history -n ; $PROMPT_COMMAND'
 PROMPT_COMMAND='history -a ; $PROMPT_COMMAND'
 shopt -s histappend
@@ -109,11 +122,11 @@ shopt -s globstar
 shopt -s hostcomplete
 
 # hh control...
-export HH_CONFIG=rawhistory,keywords,hicolor,warning,debug,prompt-bottom
+export HSTR_CONFIG=rawhistory,keywords,hicolor,warning,debug,prompt-bottom
 if [[ $- =~ .*i.* ]]; then bind '"\C-r": "\C-a hh \C-j"'; fi
-export HH_PROMPT='$ '
+export HSTR_PROMPT='$ '
 alias stat='cut -f1 -d" " ~/.bash_history_eternal | sort | uniq -c | sort -nr | head -n 30'
-source /etc/bash_completion
+#source /etc/bash_completion
 
 #==================================================
 ## Alias
@@ -219,6 +232,7 @@ alias cd=cd_func
 
 alias vim="nvim"
 alias maket="make $@ ; (aplay -q ~/Documents/toasty.wav > /dev/null 2>&1 &)"
+alias t="(aplay -q ~/Documents/toasty.wav > /dev/null 2>&1 &)"
 
 alias dstat="dstat -aft 1"
 
@@ -260,9 +274,10 @@ alias greparound="grep --color=auto -T -i -H -n -C 3"
 alias psg="ps aux | grep -v grep | grep -i -e VSZ -e"
 
 # watch command
-alias watch="watch -n 1 -d"
+alias watch="watch --color -n 1 -d"
+
 function watchps {
-    watch -n1 -d  "ps -ef | grep $1 | grep -v grep"
+    watch --color -n1 -d  "ps -ef | grep $1 | grep -v grep"
 }
 
 
@@ -321,26 +336,26 @@ function noproxy(){
 }
 
 #source $HOME/env/fsmt_env
-source $HOME/env/jrnl_env
+#source $HOME/env/jrnl_env
 
 
 # TODO.TXT setup
-export TODOTXT_DEFAULT_ACTION=lsa
-# Sort by priority and then by number
-export TODOTXT_SORT_COMMAND='env LC_COLLATE=C sort -k 2,2 -k 1,1n'
-# todo.txt completion source
-source $HOME/bin/opt/todotxt/todo_completion
-alias t="$HOME/bin/todo.sh -c -a -t -d $HOME/bin/opt/todotxt/todo.cfg"
-complete -F _todo t
-alias todo="$HOME/bin/todo.sh -c -a -t -d $HOME/bin/opt/todotxt/todo.cfg"
-complete -F _todo todo
-alias todo.sh="$HOME/bin/todo.sh -c -a -t -d $HOME/bin/opt/todotxt/todo.cfg"
-complete -F _todo todo.sh
+#export TODOTXT_DEFAULT_ACTION=lsa
+## Sort by priority and then by number
+#export TODOTXT_SORT_COMMAND='env LC_COLLATE=C sort -k 2,2 -k 1,1n'
+## todo.txt completion source
+#source $HOME/bin/opt/todotxt/todo_completion
+#alias t="$HOME/bin/todo.sh -c -a -t -d $HOME/bin/opt/todotxt/todo.cfg"
+#complete -F _todo t
+#alias todo="$HOME/bin/todo.sh -c -a -t -d $HOME/bin/opt/todotxt/todo.cfg"
+#complete -F _todo todo
+#alias todo.sh="$HOME/bin/todo.sh -c -a -t -d $HOME/bin/opt/todotxt/todo.cfg"
+#complete -F _todo todo.sh
 
 # hack for the netboot file existance issue
 function touch_shit () {
     if [ $# -eq 0 ]; then
-	    echo "please provide a path where to touch all files ..."
+        echo "please provide a path where to touch all files ..."
         echo "Usage: command [PATH_TO_FOLDER]"
     else
         echo "being quite touchy touchy in $1"
@@ -409,3 +424,27 @@ function ltm-kill() {
 
 # Change to home directory
 cd
+
+if [[ (`date +%u` == 3 ) ]]; then
+    cat << EOF
+
+    -- it is wednesday--
+
+             -----
+           /       \ __
+         /              \\
+       /  0    0          |
+      |     ..            |
+      /|        _/       /
+     / .\_____/         /
+    /V\|    \___|  |__/
+                =  /
+               / V
+
+         -- my dudes --
+
+EOF
+( aplay ~/Documents/wednesday.wav &> /dev/null &> /dev/null &)
+fi
+
+

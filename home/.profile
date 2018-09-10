@@ -12,12 +12,16 @@
 if [ -n "$BASH_VERSION" ]; then
     # include .bashrc if it exists
     if [ -f "$HOME/.bashrc" ]; then
-	. "$HOME/.bashrc"
+    . "$HOME/.bashrc"
     fi
 fi
 
+# Global variabel exports
+
 export CUPS_SERVER="cups.techfak.uni-bielefeld.de:631"
 export TERMINAL="/usr/bin/termite"
+export GTI_SPEED=2000
+
 
 # set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/bin" ] ; then
