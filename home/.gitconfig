@@ -43,3 +43,5 @@
 
 [credential]
     helper = !pass-git-helper $@
+[pull]
+	rebase = true

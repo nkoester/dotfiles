@@ -1,0 +1,18 @@
+! old:
+! remak right alt to super (one hand navigation)
+! keycode 108 = Super_L
+! remove mod1 = Super_L
+
+! caps key to mode switch (navigate using jkl;)
+! alternative: left alt keycode 64
+! alternative: right alt keycode 108
+keycode 66 = Mode_switch
+
+keysym j = j J Left
+keysym semicolon = semicolon colon Right
+keysym odiaeresis = odiaeresis Odiaeresis Right
+keysym l = l L Up
+keysym k = k K Down
+
+! use insert key as a compse key for o" a" ss etc.
+keycode 118 = Multi_key

@@ -24,9 +24,17 @@ PATH=${HOME}/local/bin:${HOME}/local/usr/bin:$HOME/.local/bin:$HOME/bin:$PATH
 PATH=${PATH}:/home/nkoester/.npm/bin
 
 # a fix for the additional slash at the end which lead to weird errors
-export HOME=${HOME%/}
+# techfak only?
+# export HOME=${HOME%/}
 
-
+# enable bash completion in interactive shells
+if ! shopt -oq posix; then
+  if [ -f /usr/share/bash-completion/bash_completion ]; then
+    . /usr/share/bash-completion/bash_completion
+  elif [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+  fi
+fi
 # source our own bash completions
 #BASH_COMPLETIONS_FOLDER="${HOME}/.bash_completion.d"
 #if [ -d "$BASH_COMPLETIONS_FOLDER" ]; then
@@ -121,9 +129,9 @@ shopt -s extglob
 shopt -s globstar
 shopt -s hostcomplete
 
-# hh control...
-export HSTR_CONFIG=rawhistory,keywords,hicolor,warning,debug,prompt-bottom
-if [[ $- =~ .*i.* ]]; then bind '"\C-r": "\C-a hh \C-j"'; fi
+# hstr control...
+export HSTR_CONFIG=raw-history-view,keywords,hicolor,warning,debug,prompt-bottom
+if [[ $- =~ .*i.* ]]; then bind '"\C-r": "\C-a hstr \C-j"'; fi
 export HSTR_PROMPT='$ '
 alias stat='cut -f1 -d" " ~/.bash_history_eternal | sort | uniq -c | sort -nr | head -n 30'
 #source /etc/bash_completion
@@ -243,12 +251,13 @@ export TIME_STYLE=long-iso
 alias ls="ls --color=auto -lh "
 alias ll="ls -lh --color=auto"
 alias la="ls -lah --color=auto"
+alias lad="lsd -lah"
+alias ltd="lsd --tree"
+
 
 # extend basics
 alias sublime="/vol/clf/opt/sublime/sublime"
-alias fx="screen -d -m firefox"
 alias detatched="screen -d -m"
-alias gedit="screen -d -m gedit"
 alias ..="cd .."
 alias mkdir="mkdir -pv"
 alias tree="tree -CshpF"
@@ -258,8 +267,8 @@ alias cp='cp -v'
 alias grep="grep --color=auto"
 alias grepp="grep -T -i -H -n"
 alias g="git"
-
-alias jenkins="export PYTHONPATH=$HOME/sandboxes/iJenkinsCLI/lib/python2.7/site-packages/ && $HOME/sandboxes/iJenkinsCLI/bin/iJenkins"
+export LESS="-N -R"
+alias lesshl="LESSOPEN=\"|src-hilite-lesspipe.sh %s\" LESS=\"-N -R\" less"
 
 function highlight {
     while read data; do
@@ -328,12 +337,13 @@ alias windows="/vol/rdesktop/bin/startWindows_freerdp"
 alias ec="~/bin/eclipse/eclipse -vmargs -Xms2048m -Xmx4096m -XX:PermSize=1024m -XX:MaxPermSize=2048m"
 alias ec2="/vol/clf/opt/eclipse_indigo_x86_64/eclipse -vmargs -XX:MaxPermSize=1024m -Xms1024m -Xmx1024m"
 
-function noproxy(){
-    unset MAIL
-    unset http_proxy
-    unset ftp_proxy
-    unset https_proxy
-}
+# techfak only?
+# function noproxy(){
+#     unset MAIL
+#     unset http_proxy
+#     unset ftp_proxy
+#     unset https_proxy
+# }
 
 #source $HOME/env/fsmt_env
 #source $HOME/env/jrnl_env
@@ -353,15 +363,16 @@ function noproxy(){
 #complete -F _todo todo.sh
 
 # hack for the netboot file existance issue
-function touch_shit () {
-    if [ $# -eq 0 ]; then
-        echo "please provide a path where to touch all files ..."
-        echo "Usage: command [PATH_TO_FOLDER]"
-    else
-        echo "being quite touchy touchy in $1"
-        find $1 -type f -name '*' -exec touch {} \;
-    fi
-}
+# techfak only
+# function touch_shit () {
+#     if [ $# -eq 0 ]; then
+#         echo "please provide a path where to touch all files ..."
+#         echo "Usage: command [PATH_TO_FOLDER]"
+#     else
+#         echo "being quite touchy touchy in $1"
+#         find $1 -type f -name '*' -exec touch {} \;
+#     fi
+# }
 
 
 
@@ -380,30 +391,31 @@ function choice_l_g(){
     fi
 }
 
-function csraenv() {
-
-    if [ ! cor ];then
-        ai
-    fi
-
-    printf "\nsourcing vdemo env..."
-    read -n1 -p "[l]ocal, [g]lobal or [*]abort? " doit
-    case $doit in
-      l|L) printf "\nsourcing LOCAL\n\n"
-           printf "$ source /vol/csra/releases/trusty/lsp-csra-nightly/etc/vdemo_scripts/lsp-csra-base-localhost.sh"
-           source /vol/csra/releases/trusty/lsp-csra-nightly/etc/vdemo_scripts/lsp-csra-base-localhost.sh
-           export PS1="${PS1_row1}${COLOR_BRACKETS}[\[\033[33m\]\[\033[1;40m\]vdemo-env:csra-local${COLOR_BRACKETS}]\[\e[0;32m\]${PS1_row2}"
-           cd $prefix
-           return 0 ;;
-      g|G) printf "\nsourcing GLOBAL\n\n";
-           printf "$ source /vol/csra/releases/trusty/lsp-csra-nightly/etc/vdemo_scripts/lsp-csra-base.sh"
-           source /vol/csra/releases/trusty/lsp-csra-nightly/etc/vdemo_scripts/lsp-csra-base.sh
-           export PS1="${PS1_row1}${COLOR_BRACKETS}[\[\033[33m\]\[\033[1;40m\]vdemo-env:csra-global${COLOR_BRACKETS}]\[\e[0;32m\]${PS1_row2}"
-           cd $prefix
-           return 0 ;;
-      *) printf "\nUser abort ...\n"; return 1 ;;
-    esac
-}
+#netboot only
+# function csraenv() {
+#
+#     if [ ! cor ];then
+#         ai
+#     fi
+#
+#     printf "\nsourcing vdemo env..."
+#     read -n1 -p "[l]ocal, [g]lobal or [*]abort? " doit
+#     case $doit in
+#       l|L) printf "\nsourcing LOCAL\n\n"
+#            printf "$ source /vol/csra/releases/trusty/lsp-csra-nightly/etc/vdemo_scripts/lsp-csra-base-localhost.sh"
+#            source /vol/csra/releases/trusty/lsp-csra-nightly/etc/vdemo_scripts/lsp-csra-base-localhost.sh
+#            export PS1="${PS1_row1}${COLOR_BRACKETS}[\[\033[33m\]\[\033[1;40m\]vdemo-env:csra-local${COLOR_BRACKETS}]\[\e[0;32m\]${PS1_row2}"
+#            cd $prefix
+#            return 0 ;;
+#       g|G) printf "\nsourcing GLOBAL\n\n";
+#            printf "$ source /vol/csra/releases/trusty/lsp-csra-nightly/etc/vdemo_scripts/lsp-csra-base.sh"
+#            source /vol/csra/releases/trusty/lsp-csra-nightly/etc/vdemo_scripts/lsp-csra-base.sh
+#            export PS1="${PS1_row1}${COLOR_BRACKETS}[\[\033[33m\]\[\033[1;40m\]vdemo-env:csra-global${COLOR_BRACKETS}]\[\e[0;32m\]${PS1_row2}"
+#            cd $prefix
+#            return 0 ;;
+#       *) printf "\nUser abort ...\n"; return 1 ;;
+#     esac
+# }
 #source $HOME/env/fsmt_env
 
 
