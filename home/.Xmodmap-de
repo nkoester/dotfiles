@@ -9,8 +9,8 @@
 keycode 66 = Mode_switch
 
 keysym j = j J Left
-keysym semicolon = semicolon colon Right
-! keysym odiaeresis = odiaeresis Odiaeresis Right
+! keysym semicolon = semicolon colon Right
+keysym odiaeresis = odiaeresis Odiaeresis Right
 keysym l = l L Up
 keysym k = k K Down
 

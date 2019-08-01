@@ -20,7 +20,7 @@ fi
 
 
 # set type repetition speed
-xset r rate 300 80
+xset r rate 200 80
 
 
 # dell latetude e5470 specific stuff
