@@ -23,7 +23,8 @@ export TERMINAL="/usr/bin/termite"
 export GTI_SPEED=2000
 
 
+
 # set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/bin" ] ; then
-    PATH="$HOME/bin:$PATH"
+    PATH="$HOME/bin:/opt/xdman/:$PATH"
 fi
