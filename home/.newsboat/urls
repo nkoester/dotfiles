@@ -1,0 +1,121 @@
+#
+# Reading
+#
+----------------------------------
+----Reading
+----------------------------------
+https://news.ycombinator.com/rss "Reading"
+https://feeds.feedburner.com/fullhackernews
+https://blog.fefe.de/rss.xml "Reading"
+http://alternativlos.org/alternativlos.rss "Reading"
+--
+--
+#
+# Tech
+#
+----------------------------------
+----Tech
+----------------------------------
+https://www.archlinux.org/feeds/news/ "Tech"
+https://security.archlinux.org/advisory/feed.atom "Tech"
+https://netzpolitik.org/feed
+https://www.kuketz-blog.de/feed/
+https://www.kuketz-blog.de/category/artikel/feed/
+https://www.ccc.de/de/rss/updates.xml
+--
+--
+
+#
+# News
+#
+----------------------------------
+----News
+----------------------------------
+https://taz.de/rss.xml News "~Taz.de"
+https://rss.golem.de/rss.php?feed=RSS2.0 News
+https://www.tagesschau.de/xml/rss2 News
+https://www.spiegel.de/schlagzeilen/index.rss News
+https://www.spiegel.de/index.rss News
+--
+--
+
+#
+# Weather
+#
+----------------------------------
+----Weather
+----------------------------------
+# winterberg
+http://wetterstationen.meteomedia.de/messnetz/vorhersagegrafik/094230.png Weather "~Meteomedia Winterberg"
+# bielefeld
+http://wetterstationen.meteomedia.de/messnetz/vorhersagegrafik/103270.png Weather "~Meteomedia Bielefeld"
+--
+--
+
+#
+# Comics
+#
+----------------------------------
+----Comics
+----------------------------------
+https://xkcd.com/rss.xml
+--
+--
+
+#
+# YT
+#
+----------------------------------
+----YT
+----------------------------------
+https://www.youtube.com/feeds/videos.xml?channel_id=UCtqxG9IrHFU_ID1khGvx9sA "YT"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCaxar6TBM-94_ezoS00fLkA "YT"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCMaDyFlagYlsolLLfWHu7Dw "YT"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCE1jXbVAGJQEORz9nZqb5bQ "YT"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCmu9PVIZBk-ZCi-Sk2F2utA "YT"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCdBK94H6oZT2Q7l0-b0xmMg "YT"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCJHA_jMfCvEnv-3kRjTCQXw "YT"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCS_H_4AmsqC705DObesZIIg "YT"
+https://www.youtube.com/feeds/videos.xml?channel_id=UChKlSK39lLg8eZHIX0iVzLA "YT"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCwIH9fodo6UwgXWvTTAGMag "YT"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCLoWcRy-ZjA-Erh0p_VDLjQ "YT"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCMrKscEv_Ri1pvlRsLxsqJQ "YT"
+https://www.youtube.com/feeds/videos.xml?channel_id=UC0vBXGSyV14uvJ4hECDOl0Q "YT"
+https://www.youtube.com/feeds/videos.xml?channel_id=UC0fDG3byEcMtbOqPMymDNbw "YT"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCBZiUUYeLfS5rIj4TQvgSvA "YT"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCI3DTtB-a3fJPjKtQ5kYHfA "YT"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCEKJKJ3FO-9SFv5x5BzyxhQ "YT"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCK5eBtuoj_HkdXKHNmBLAXg "YT"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCZcV8AWZ_nQvx0Yvnmy7aHw "YT"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCFc8CBNDUFLc1hN5UayNR8g "YT"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCp68_FLety0O-n9QU6phsgw "YT"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCl2mFZoRqjw_ELax4Yisf6w "YT"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCEOXxzW2vU0P-0THehuIIeg "YT"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCHkYOD-3fZbuGhwsADBd9ZQ "YT"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCV6mNrW8CrmWtcxWfQXy11g "YT"
+https://www.youtube.com/feeds/videos.xml?channel_id=UC2DjFE7Xf11URZqWBigcVOQ "YT"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCQEnQfezywrAwkHWX_Uo_Qg "YT"
+https://www.youtube.com/feeds/videos.xml?channel_id=UC3Oe-jfrIqEGygxYBYyN6jQ "YT"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCtUbO6rBht0daVIOGML3c8w "YT"
+https://www.youtube.com/feeds/videos.xml?channel_id=UC0a8nteER_pU4Aj6hmEyJAQ "YT"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCXuqSBlHAE6Xw-yeJA0Tunw "YT"
+https://www.youtube.com/feeds/videos.xml?channel_id=UC5t8u4kpE0WvLxkPWIp8n-g "YT"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCCDU1fsmgvWljcW2aodfJsA "YT"
+https://www.youtube.com/feeds/videos.xml?channel_id=UC2WWBPpcENmF3CkHQx3UB2A "YT"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCuOqvRRt9GqyIUVTwSB4Ucg "YT"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCsvn_Po0SmunchJYOWpOxMg "YT"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCpFcHE36IoySjYj1Rytxyog "YT"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCIyZiiHXIH7KkqfaDvBmG-Q "YT"
+https://www.youtube.com/feeds/videos.xml?channel_id=UC0e3QhIYukixgh5VVpKHH9Q "YT"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCSuhUzpdXg9jme6eN6HA_IA "YT"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCr-cm90DwFJC0W3f9jBs5jA "YT"
+https://www.youtube.com/feeds/videos.xml?channel_id=UChrR7Vkj4EecKbkyLWw4lhg "YT"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCRP1Zx7B4b66ZwkB2Ov5pMw "YT"
+# https://www.youtube.com/feeds/videos.xml?channel_id= "YT"
+--
+--
+----------------------------------
+----Podcast
+----------------------------------
+https://logbuch-netzpolitik.de/feed
+https://logbuch-netzpolitik.de/feed/mp3 "~ Logbuch:Netzpolitik (mp3)"

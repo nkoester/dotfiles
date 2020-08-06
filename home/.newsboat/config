@@ -1,0 +1,106 @@
+# external-url-viewer "urlscan -dc -r 'linkhandler.sh {} >> /tmp/lol'"
+
+auto-reload yes
+#browser /usr/bin/firefox
+browser linkhandler.sh
+cleanup-on-quit no
+download-path "/home/nkoester/Downloads/newsboat"
+feed-sort-order none
+max-downloads 4
+download-full-page no
+notify-always no
+notify-format "newsbeuter: %n unread articles within %f unread feeds"
+#notify-program notify-send
+notify-xterm no
+notify-screen no
+player vlc
+refresh-on-startup yes
+reload-time 20
+reload-threads 5
+show-read-articles yes
+show-read-feeds yes
+wrap-scroll yes
+pager internal
+
+
+bind-key b quit
+unbind-key j
+unbind-key ;
+#bind-key j quit
+#bind-key ; open
+
+bind-key k next
+bind-key l prev
+bind-key K next-feed
+bind-key L prev-feed
+bind-key k down all
+bind-key l up all
+bind-key K next article
+bind-key L prev article
+
+
+bind-key r toggle-article-read
+bind-key R mark-feed-read
+bind-key T mark-all-feeds-read
+bind-key p reload
+bind-key P reload-all
+
+
+unbind-key SPACE
+bind-key SPACE macro-prefix
+
+
+macro v set browser "/usr/bin/tsp /usr/bin/vlc %u" ; open-in-browser ; set browser "linkhandler.sh %u"
+macro f set browser "/usr/bin/firefox %u" ; open-in-browser ; set browser "linkhandler.sh %u"
+macro i set browser "/usr/bin/feh %u" ; open-in-browser ; set browser "linkhandler.sh %u"
+macro r set browser "w3m %u" ; open-in-browser ; set browser "linkhandler.sh %u"
+
+
+
+
+
+
+# hide articles matching: ---------------------------------------------
+
+ignore-article "*" "title =~ \"Sponsor\""
+ignore-article "*" "title =~ \"Advertisement\""
+ignore-mode "display"
+
+
+
+
+# formatting and colorization ------------------------------------------
+
+datetime-format             "%Y-%m-%d %H:%M"
+articlelist-format          " %4i  %D %?T? %-20T ? %t"
+feedlist-format             " %4i  %n %11u %t"
+articlelist-title-format    " %T (%u unread, %t total) - %U"
+feedlist-title-format       " Feeds (%u unread, %t total)"
+itemview-title-format       " %T (%u unread, %t total)"
+swap-title-and-hints        yes
+confirm-exit                yes
+
+
+#feedlist-format    "%3i  %n %2U  %t"
+#articlelist-format "%4i  %D %?T? %-15T ? %t"
+#articlelist-format "%4i %f %D  %?T?|%-17T| ?%t"
+
+#highlight feedlist    "^  *[0-9]+  *N  "                    color156 default
+#highlight articlelist "^  *[0-9]+  *N  "                    color156 default
+
+highlight article     "(^Feed:.*|^Title:.*|^Author:.*)"     color75  default
+highlight article     "(^Link:.*|^Date:.*)"                 color75  default
+highlight article     "^Podcast Download URL:.*"            color71  default
+highlight article     "^Links:"                             white    color240 underline
+highlight article     "\\[[0-9][0-9]*\\]"                   color72  default  bold
+highlight article     "\\[image [0-9][0-9]*\\]"             color72  default  bold
+highlight article     "\\[embedded flash: [0-9][0-9]*\\]"   color72  default  bold
+highlight article     ":.*\\(link\\)$"                      color74  default
+highlight article     ":.*\\(image\\)$"                     color74  default
+highlight article     ":.*\\(embedded flash\\)$"            color74  default
+
+color listnormal                                            white    default
+color listfocus                                             default  color240
+color info                                                  default  color240
+
+
