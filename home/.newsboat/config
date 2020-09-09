@@ -13,7 +13,7 @@ notify-format "newsbeuter: %n unread articles within %f unread feeds"
 #notify-program notify-send
 notify-xterm no
 notify-screen no
-player vlc
+player mpv
 refresh-on-startup yes
 reload-time 20
 reload-threads 5
@@ -50,10 +50,10 @@ unbind-key SPACE
 bind-key SPACE macro-prefix
 
 
-macro v set browser "/usr/bin/tsp /usr/bin/vlc %u" ; open-in-browser ; set browser "linkhandler.sh %u"
+macro v set browser "/usr/bin/tsp /usr/bin/mpv %u" ; open-in-browser ; set browser "linkhandler.sh %u"
 macro f set browser "/usr/bin/firefox %u" ; open-in-browser ; set browser "linkhandler.sh %u"
 macro i set browser "/usr/bin/feh %u" ; open-in-browser ; set browser "linkhandler.sh %u"
-macro r set browser "w3m %u" ; open-in-browser ; set browser "linkhandler.sh %u"
+macro o set browser "w3m %u" ; open-in-browser ; set browser "linkhandler.sh %u"
 
 
 
