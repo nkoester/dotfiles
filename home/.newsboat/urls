@@ -111,6 +111,7 @@ https://www.youtube.com/feeds/videos.xml?channel_id=UCSuhUzpdXg9jme6eN6HA_IA "YT
 https://www.youtube.com/feeds/videos.xml?channel_id=UCr-cm90DwFJC0W3f9jBs5jA "YT"
 https://www.youtube.com/feeds/videos.xml?channel_id=UChrR7Vkj4EecKbkyLWw4lhg "YT"
 https://www.youtube.com/feeds/videos.xml?channel_id=UCRP1Zx7B4b66ZwkB2Ov5pMw "YT"
+https://www.youtube.com/feeds/videos.xml?channel_id=UC2C_jShtL725hvbm1arSV9w "YT"
 # https://www.youtube.com/feeds/videos.xml?channel_id= "YT"
 --
 --
@@ -119,3 +120,16 @@ https://www.youtube.com/feeds/videos.xml?channel_id=UCRP1Zx7B4b66ZwkB2Ov5pMw "YT
 ----------------------------------
 https://logbuch-netzpolitik.de/feed
 https://logbuch-netzpolitik.de/feed/mp3 "~ Logbuch:Netzpolitik (mp3)"
+--
+--
+----------------------------------
+----JOBS
+----------------------------------
+--Weltweit
+https://stackoverflow.com/jobs/feed?r=true&s=50000&c=EUR&tl=mps+xtext+java+mde+dsl+neo4j+cypher+ros&td=sap+erp+node.js+javascript "~StackOverflow | Feed"
+--Bundesweit
+https://www.service.bund.de/Content/DE/Stellen/Suche/Formular.html?nn=4642046&cl2Categories_Taetigkeitsfeld=taetigkeitsfeld-itundtelekommunikation+taetigkeitsfeld-wissenschaftundtechnik&cl2Categories_AnstellungsdauerNeu=_befristet&sortOrder=dateOfIssue_dt+desc&cl2Categories_Laufbahn=laufbahn-hoehererdienst&resultsPerPage=100&jobsrss=true "~bund.de | höherer Dienst | it+research | bund | befristet"
+https://www.service.bund.de/Content/DE/Stellen/Suche/Formular.html?nn=4642046&cl2Categories_Taetigkeitsfeld=taetigkeitsfeld-itundtelekommunikation+taetigkeitsfeld-wissenschaftundtechnik&cl2Categories_AnstellungsdauerNeu=_unbefristet&sortOrder=dateOfIssue_dt+desc&cl2Categories_Laufbahn=laufbahn-hoehererdienst&resultsPerPage=100&jobsrss=true "~bund.de | höherer Dienst | it+research | bund | unbefristet"
+--Bielefeld
+https://www.service.bund.de/Content/DE/Stellen/Suche/Formular.html?nn=4642046&ambit_distance=50&cl2Categories_Taetigkeitsfeld=taetigkeitsfeld-wissenschaftundtechnik+taetigkeitsfeld-itundtelekommunikation&type=0&cl2Categories_AnstellungsdauerNeu=_befristet&sortOrder=dateOfIssue_dt+desc&cl2Categories_Laufbahn=laufbahn-gehobenerdienst+laufbahn-hoehererdienst&solr_opengeo_id=14477&resultsPerPage=100&city_zipcode=Bielefeld+%28Nordrhein-Westfalen%29&jobsrss=true "~bund.de | gehoben/höherer Dienst | IT+research | BI+50 | befristet"
+https://www.service.bund.de/Content/DE/Stellen/Suche/Formular.html?nn=4642046&ambit_distance=50&cl2Categories_Taetigkeitsfeld=taetigkeitsfeld-wissenschaftundtechnik+taetigkeitsfeld-itundtelekommunikation&type=0&cl2Categories_AnstellungsdauerNeu=_unbefristet&sortOrder=dateOfIssue_dt+desc&cl2Categories_Laufbahn=laufbahn-gehobenerdienst+laufbahn-hoehererdienst&solr_opengeo_id=14477&resultsPerPage=100&city_zipcode=Bielefeld+%28Nordrhein-Westfalen%29&jobsrss=true "~bund.de | gehoben/höherer Dienst | IT+research | BI+50 | unbefristet"

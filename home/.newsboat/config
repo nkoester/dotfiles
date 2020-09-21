@@ -40,6 +40,7 @@ bind-key L prev article
 
 
 bind-key r toggle-article-read
+bind-key m toggle-article-read
 bind-key R mark-feed-read
 bind-key T mark-all-feeds-read
 bind-key p reload
